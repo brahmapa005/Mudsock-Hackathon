@@ -26,69 +26,38 @@ imgs.forEach((img) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+//SETTING UP FIREBASE AND FIRESTORE//
 
-var nameInput = "";
-var waterInput = "";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
+import { collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"
 
-//save form information when button clicked
-//need to push name, water frequency, and icon to database
-//the image link that needs to be pushed is held in the variable selectedImage
-// function save(){
-//     //console.log(selectedIcon)
-//     nameInput = document.getElementById("nameInput").value;
-//     waterInput = document.getElementById("waterInput").value;
+// TODO: Replace the following with your app's Firebase project configuration
+// See: https://support.google.com/firebase/answer/7015592
+const firebaseConfig = {
 
-//     await setDoc(doc(db, "Preferences", "4vtPpyJUmneFzmqohQew"), {
-//         name: [nameInput],
-//         time: [timeInput],
-//       });
+    apiKey: "AIzaSyCy_tqUSARUIvaD9lyuJk4LZDwaa_zjC9Y",
+    authDomain: "mudsock-hackathon.firebaseapp.com",
+    projectId: "mudsock-hackathon",
+    storageBucket: "mudsock-hackathon.appspot.com",
+    messagingSenderId: "511083006715",
+    appId: "1:511083006715:web:8ec4d98a6ea5fe0f9f7e5e"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 
-//     // console.log(nameInput)
-//     // console.log(waterInput);
-//     //waterInput = document.getElementById("waterInput").value;
-
-//     // var newName = localStorage.getItem("name");
-//     // newName.push(nameInput);
-//     // localStorage.setItem("name", newName);
-
-//     // plants.name.push(nameInput);
-//     // plants.waterFreq.push(waterInput);
-//     // console.log(plants.name)
-//     console.log(localStorage.getItem("name"));
-
-//     event.preventDefault();
-
-//     // location.href="garden.html";
-// }
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
 
 
 
-// // Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
-// import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-firestore.js";
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// import {
-//     doc,
-//     setDoc,
-//   } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-firestore.js";
 
-// // TODO: Add SDKs for Firebase products that you want to use
-// // https://firebase.google.com/docs/web/setup#available-libraries
+//SUBMITTING DATA//
 
-// // Your web app's Firebase configuration
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCy_tqUSARUIvaD9lyuJk4LZDwaa_zjC9Y",
-//   authDomain: "mudsock-hackathon.firebaseapp.com",
-//   projectId: "mudsock-hackathon",
-//   storageBucket: "mudsock-hackathon.appspot.com",
-//   messagingSenderId: "511083006715",
-//   appId: "1:511083006715:web:8ec4d98a6ea5fe0f9f7e5e"
-// };
-
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-// const db = getFirestore();
 
 const submitBtn = document.getElementById("subBtn");
 
@@ -100,13 +69,37 @@ submitBtn.addEventListener("click", async(e) => {
     nameInput = document.getElementById("nameInput").value;
     waterInput = document.getElementById("waterInput").value;
 
-    await setDoc(doc(db, "Preferences", "4vtPpyJUmneFzmqohQew"), {
-        name: [nameInput],
-        time: [timeInput],
-      });
+    // var namesList = [];
+    // var waterList = [];
+
+    // namesList.push(nameInput);
+    // waterList.push(waterInput);
+
+
+    try {
+        const docRef = await addDoc(collection(db, "Preferences"), {
+          name: nameInput,
+          time: waterInput
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+
+    location.href = "garden.html";
   
     
-  });
+});
+
+
+
+
+var nameInput = "";
+var waterInput = "";
+
+
+
+
 
 
 
