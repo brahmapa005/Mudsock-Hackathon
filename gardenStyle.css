@@ -29,6 +29,10 @@ body {
     font-size: 40px;
 }
 
+.add-btn:hover {
+    background-color: #30b00f;
+}
+
 .grid-box-div {
     display: flex;
     justify-content: center;
