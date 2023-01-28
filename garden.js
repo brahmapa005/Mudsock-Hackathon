@@ -54,6 +54,11 @@ querySnapshot.forEach((doc) => {
 var selects = document.querySelectorAll(".selects");
 
 selects.forEach((select) => {
+    const option = document.createElement("option");
+    const node = document.createTextNode("Choose");
+    option.appendChild(node);
+    select.appendChild(option);
+
     for (var i = 0; i < plantNames.length; i++) {
         const option = document.createElement("option");
         const node = document.createTextNode(plantNames[i]);
@@ -75,18 +80,20 @@ for (var i = 0; i < selects.length; i++) {
         e.preventDefault();
         console.log('hi',e.target)
         console.log(select);
-
-        var target = e.target.id;
-        console.log("TARGWT", target)
+        let currentSelect = e.target
+        var target = currentSelect.id;
 
         var num = target.slice(6);
-        console.log("NUM", num)
 
         var query = "." + num
 
-        var plant = select.value;
+        var plant = currentSelect.value;
+        console.log("PLANT", plant)
         var index = plantNames.indexOf(plant);
+        console.log("INDEX", index)
         var link = plantLinks[index];
+
+        console.log("LINK", link)
 
         let img = document.createElement("img");
         img.src = link;
@@ -100,7 +107,39 @@ for (var i = 0; i < selects.length; i++) {
 
     });
 
+    // for (var i = 0; i < plantNames; i++) {
+    //     var time = parseInt(plantWateringTimes[i]);
+    //     console.log("TIME", time*60000)
+    
+    //     function timer() {
+    //         alert("Time to water" + plantNames[i]);
+    //     }
+    
+    //     setInterval(timer, time);
+    
+    // }
+
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//CREATING TIMERS//
+
+// let now = new Date()
+
+// setInterval(()=>{
+//     for(i=0; i<plantWateringTimes)
+
+// }, 5000)
+
+
+for (var i = 0; i < plantWateringTimes.length; i++) {
+    console.log(plantNames[i])
+    alert("It's time to water your " + plantNames[i] + "!");
+
+}
+
+
 
 
 
