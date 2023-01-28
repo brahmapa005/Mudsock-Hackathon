@@ -3,6 +3,8 @@
 //icon is set to first one by default
 var selectedIcon = document.getElementById("plant1");
 var imgs = document.querySelectorAll(".plant");
+var selectedImage;
+
 
 imgs.forEach((img) => {
     img.addEventListener("click", async(e) => {
@@ -18,10 +20,12 @@ imgs.forEach((img) => {
         //console.log(selectedIcon);
 
         //store the image link
-        var selectedImage = "images/" + clickedID + ".png";
+        selectedImage = "images/" + clickedID + ".png";
 
     });
 });
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,6 +73,7 @@ submitBtn.addEventListener("click", async(e) => {
     nameInput = document.getElementById("nameInput").value;
     waterInput = document.getElementById("waterInput").value;
 
+
     // var namesList = [];
     // var waterList = [];
 
@@ -79,7 +84,8 @@ submitBtn.addEventListener("click", async(e) => {
     try {
         const docRef = await addDoc(collection(db, "Preferences"), {
           name: nameInput,
-          time: waterInput
+          time: waterInput,
+          link: selectedImage
         });
         console.log("Document written with ID: ", docRef.id);
       } catch (e) {

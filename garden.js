@@ -29,6 +29,7 @@ const db = getFirestore(app);
 //CREATING LISTS//
 const plantNames = [];
 const plantWateringTimes = [];
+const plantLinks = [];
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -37,10 +38,12 @@ const querySnapshot = await getDocs(collection(db, "Preferences"));
 querySnapshot.forEach((doc) => {
     var plantName = doc.data().name;
     var plantWaterTime = doc.data().time;
+    var plantLink = doc.data().link;
 
 
     plantNames.push(plantName);
-    plantWateringTimes.push(plantWateringTimes);
+    plantWateringTimes.push(plantWaterTime);
+    plantLinks.push(plantLink);
     
 });
 
@@ -59,6 +62,48 @@ selects.forEach((select) => {
     
     }
 });
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//CHANGING PLANT IMAGES
+for (var i = 0; i < selects.length; i++) {
+    var select = selects[i];
+    console.log(selects[i]);
+
+
+    select.addEventListener("change", async(e) => {
+        e.preventDefault();
+        console.log('hi',e.target)
+        console.log(select);
+
+        var target = e.target.id;
+        console.log("TARGWT", target)
+
+        var num = target.slice(6);
+        console.log("NUM", num)
+
+        var query = "." + num
+
+        var plant = select.value;
+        var index = plantNames.indexOf(plant);
+        var link = plantLinks[index];
+
+        let img = document.createElement("img");
+        img.src = link;
+
+        img.style.width = 150 + "px";
+        img.style.height = 150 + "px";
+        img.style.marginTop = 10 + "px";
+
+        let elem = document.querySelector(query)
+        elem.appendChild(img);
+
+    });
+
+}
+
+
+
 
 
 
